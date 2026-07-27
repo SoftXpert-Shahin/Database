@@ -1,12 +1,15 @@
 name: Daily Supabase Full Backup
+
 on:
   schedule:
     - cron: '0 0 * * *' # Runs every single day at midnight UTC
-  workflow_dispatch: # Allows you to press a button to run it manually
+  workflow_dispatch: # Allows manual execution
 
 jobs:
   backup:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to commit and push changes back to the repo
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -21,17 +24,16 @@ jobs:
 
       - name: Back Up Database Schema and Data
         run: |
-          supabase db dump --db-url "${{ secrets.https://tjtimguhglwtdwhfdezo.supabase.co }}" -f backups/database/schema.sql
-          supabase db dump --db-url "${{ secrets.https://tjtimguhglwtdwhfdezo.supabase.co }}" -f backups/database/data.sql --use-copy --data-only
+          supabase db dump --db-url "${{ secrets.SUPABASE_DB_URL }}" -f backups/database/schema.sql
+          supabase db dump --db-url "${{ secrets.SUPABASE_DB_URL }}" -f backups/database/data.sql --use-copy --data-only
 
       - name: Back Up Storage Bucket Files
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.636eadfb3e5355454bda795eae07f0d2 }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.a752adaf984ea63682de55228e39383ca04d293ed0c17bc0931f404726a4d736 }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.SUPABASE_S3_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SUPABASE_S3_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
         run: |
-          # Replace 'your-bucket-name' with your actual Supabase bucket name
-          aws s3 sync ${{ secrets.AWS_S3_ENDPOINT }}/your-bucket-name ./backups/storage --endpoint-url ${{ secrets.AWS_S3_ENDPOINT }}
+          aws s3 sync s3://your-bucket-name ./backups/storage --endpoint-url ${{ secrets.SUPABASE_S3_ENDPOINT }}
 
       - name: Commit and Push Backups to GitHub
         run: |
