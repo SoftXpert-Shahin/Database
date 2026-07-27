@@ -1,0 +1,48 @@
+.github/workflows/daily-supabase-backup.yml
+name: Daily Supabase Full Backup
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every single day at midnight UTC
+  workflow_dispatch: # Allows you to press a button to run it manually
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Supabase CLI & AWS CLI
+        run: |
+          npm install -g supabase
+          sudo apt-get update && sudo apt-get install -y awscli
+
+      - name: Create Backup Directory
+        run: mkdir -p backups/database backups/storage
+
+      - name: Back Up Database Schema and Data
+        run: |
+          supabase db dump --db-url "${{ secrets.https://tjtimguhglwtdwhfdezo.supabase.co }}" -f backups/database/schema.sql
+          supabase db dump --db-url "${{ secrets.https://tjtimguhglwtdwhfdezo.supabase.co }}" -f backups/database/data.sql --use-copy --data-only
+
+      - name: Back Up Storage Bucket Files
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.636eadfb3e5355454bda795eae07f0d2 }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.a752adaf984ea63682de55228e39383ca04d293ed0c17bc0931f404726a4d736 }}
+          AWS_DEFAULT_REGION: "ap-southeast-1"
+        run: |
+          # Replace 'avatars' with your actual Supabase bucket name
+          aws s3 sync ${{ secrets.https://tjtimguhglwtdwhfdezo.storage.supabase.co/storage/v1/s3}}/avatars ./backups/storage --endpoint-url ${{ secrets.https://tjtimguhglwtdwhfdezo.storage.supabase.co/storage/v1/s3 }}
+
+      - name: Commit and Push Backups to GitHub
+        run: |
+          git config --global user.name 'Supabase Backup Bot'
+          git config --global user.email 'actions@github.com'
+          git add backups/
+          
+          if git diff --staged --quiet; then
+            echo "No changes detected in database or storage since last backup."
+          else
+            git commit -m "Automated Backup: $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+          fi
