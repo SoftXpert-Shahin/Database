@@ -25,9 +25,17 @@ jobs:
         run: mkdir -p backups/database backups/storage
 
       - name: Back Up Database Schema and Data
+        env:
+          PGCONNECT_TIMEOUT: 30
         run: |
-          supabase db dump --db-url "${{ secrets.SUPABASE_DB_URL }}" -f backups/database/schema.sql
-          supabase db dump --db-url "${{ secrets.SUPABASE_DB_URL }}" -f backups/database/data.sql --use-copy --data-only
+          for i in 1 2 3; do
+            echo "Backup attempt $i..."
+            supabase db dump --db-url "${{ secrets.SUPABASE_DB_URL }}" -f backups/database/schema.sql && \
+            supabase db dump --db-url "${{ secrets.SUPABASE_DB_URL }}" -f backups/database/data.sql --use-copy --data-only && \
+            break
+            echo "Attempt $i failed, retrying in 15s..."
+            sleep 15
+          done
 
       - name: Back Up Storage Bucket Files
         env:
