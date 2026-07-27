@@ -1,15 +1,15 @@
-# This is a basic workflow to help you get started with Actions
+name: Daily Supabase Full Backup
 
- name: Daily  
-on:[push]
-
+on:
   schedule:
     - cron: '0 0 * * *' # Runs every single day at midnight UTC
-  workflow_dispatch: # Allows you to press a button to run it manually
+  workflow_dispatch: # Allows manual execution
 
 jobs:
   backup:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to commit and push changes back to the repo
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -31,10 +31,9 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.636eadfb3e5355454bda795eae07f0d2 }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.a752adaf984ea63682de55228e39383ca04d293ed0c17bc0931f404726a4d736 }}
-          AWS_DEFAULT_REGION: "ap-southeast-1"
+          AWS_DEFAULT_REGION: "us-east-1"
         run: |
-          # Replace 'avatars' with your actual Supabase bucket name
-          aws s3 sync ${{ secrets.https://tjtimguhglwtdwhfdezo.storage.supabase.co/storage/v1/s3}}/avatars ./backups/storage --endpoint-url ${{ secrets.https://tjtimguhglwtdwhfdezo.storage.supabase.co/storage/v1/s3 }}
+          aws s3 sync s3://avatars ./backups/storage --endpoint-url ${{ secrets.SUPABASE_S3_ENDPOINT }}
 
       - name: Commit and Push Backups to GitHub
         run: |
