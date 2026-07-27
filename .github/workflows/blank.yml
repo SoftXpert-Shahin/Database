@@ -19,7 +19,7 @@ jobs:
           npm install -g supabase
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
-          sudo ./aws/install
+          sudo ./aws/install --update
 
       - name: Create Backup Directory
         run: mkdir -p backups/database backups/storage
