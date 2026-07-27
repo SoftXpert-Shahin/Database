@@ -1,4 +1,4 @@
-name: Daily Supabase Full Backup
+ name: Daily Supabase Full Backup
 
 on:
   schedule:
@@ -12,12 +12,12 @@ jobs:
       contents: write # Required to commit and push changes back to the repo
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5 # 🚀 UPGRADED: Silences Node.js 20 deprecation warning
 
       - name: Install Supabase CLI & AWS CLI
         run: |
           npm install -g supabase
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          curl "https://amazonaws.com" -o "awscliv2.zip"
           unzip awscliv2.zip
           sudo ./aws/install
 
