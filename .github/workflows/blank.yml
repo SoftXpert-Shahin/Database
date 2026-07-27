@@ -2,17 +2,17 @@ name: Daily Supabase Full Backup
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every single day at midnight UTC
-  workflow_dispatch: # Allows manual execution
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   backup:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required to commit and push changes back to the repo
+      contents: write
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5 # Upgraded to resolve Node 20 warning
+        uses: actions/checkout@v5
 
       - name: Install Supabase CLI & AWS CLI
         run: |
