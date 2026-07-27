@@ -1,4 +1,4 @@
- name: Daily Supabase Full Backup
+name: Daily Supabase Full Backup
 
 on:
   schedule:
@@ -12,7 +12,7 @@ jobs:
       contents: write # Required to commit and push changes back to the repo
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5 # 🚀 UPGRADED: Silences Node.js 20 deprecation warning
+        uses: actions/checkout@v5 # Upgraded to resolve Node 20 warning
 
       - name: Install Supabase CLI & AWS CLI
         run: |
@@ -35,7 +35,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SUPABASE_S3_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
         run: |
-          aws s3 sync s3://your-bucket-name ./backups/storage --endpoint-url ${{ secrets.SUPABASE_S3_ENDPOINT }}
+          aws s3 sync s3://your-bucket-name ./backups/storage --endpoint-url "${{ secrets.SUPABASE_S3_ENDPOINT }}"
 
       - name: Commit and Push Backups to GitHub
         run: |
