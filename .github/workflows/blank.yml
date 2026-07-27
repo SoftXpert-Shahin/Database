@@ -17,7 +17,7 @@ jobs:
       - name: Install Supabase CLI & AWS CLI
         run: |
           npm install -g supabase
-          curl "https://amazonaws.com" -o "awscliv2.zip"
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
           sudo ./aws/install
 
@@ -35,14 +35,14 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SUPABASE_S3_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
         run: |
-          aws s3 sync s3://your-bucket-name ./backups/storage --endpoint-url "${{ secrets.SUPABASE_S3_ENDPOINT }}"
+          aws s3 sync "s3://${{ secrets.SUPABASE_S3_BUCKET }}" ./backups/storage --endpoint-url "${{ secrets.SUPABASE_S3_ENDPOINT }}"
 
       - name: Commit and Push Backups to GitHub
         run: |
           git config --global user.name 'Supabase Backup Bot'
           git config --global user.email 'actions@github.com'
           git add backups/
-          
+
           if git diff --staged --quiet; then
             echo "No changes detected in database or storage since last backup."
           else
