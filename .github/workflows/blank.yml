@@ -1,7 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 
  name: Daily  
-on:
+on:[push]
+
   schedule:
     - cron: '0 0 * * *' # Runs every single day at midnight UTC
   workflow_dispatch: # Allows you to press a button to run it manually
