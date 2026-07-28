@@ -106,7 +106,25 @@ CREATE TABLE IF NOT EXISTS "public"."app_content" (
     "slug" "text" NOT NULL,
     "title" "text" NOT NULL,
     "content" "text" NOT NULL,
-    "updated_at" timestamp with time zone DEFAULT "now"()
+    "updated_at" timestamp with time zone DEFAULT "now"(),
+    "app_name" "text",
+    "app_logo" "text",
+    "support_email" "text",
+    "support_phone" "text",
+    "company_address" "text",
+    "currency_symbol" "text" DEFAULT '৳'::"text",
+    "platform_fee" numeric(10,2) DEFAULT 0,
+    "vat_percentage" numeric(10,2) DEFAULT 0,
+    "service_charge" numeric(10,2) DEFAULT 0,
+    "cancellation_fee" numeric(10,2) DEFAULT 0,
+    "google_maps_api_key" "text",
+    "paystack_public_key" "text",
+    "paystack_secret_key" "text",
+    "auto_cancel_minutes" integer DEFAULT 30,
+    "primary_color" "text" DEFAULT '#2563EB'::"text",
+    "secondary_color" "text" DEFAULT '#111827'::"text",
+    "maintenance_mode" boolean DEFAULT false,
+    "app_version" "text" DEFAULT '1.0.0'::"text"
 );
 
 
@@ -336,6 +354,26 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
 ALTER TABLE "public"."profiles" OWNER TO "postgres";
 
 
+CREATE TABLE IF NOT EXISTS "public"."promotion_banners" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "title" "text" NOT NULL,
+    "subtitle" "text",
+    "image_url" "text" NOT NULL,
+    "target_app" "text" DEFAULT 'both'::"text" NOT NULL,
+    "action_type" "text" DEFAULT 'none'::"text",
+    "action_value" "text",
+    "sort_order" integer DEFAULT 0,
+    "active" boolean DEFAULT true,
+    "starts_at" timestamp with time zone,
+    "ends_at" timestamp with time zone,
+    "created_at" timestamp with time zone DEFAULT "now"(),
+    "updated_at" timestamp with time zone DEFAULT "now"()
+);
+
+
+ALTER TABLE "public"."promotion_banners" OWNER TO "postgres";
+
+
 CREATE TABLE IF NOT EXISTS "public"."vehicles" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "user_id" "uuid",
@@ -447,6 +485,11 @@ ALTER TABLE ONLY "public"."payments"
 
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."promotion_banners"
+    ADD CONSTRAINT "promotion_banners_pkey" PRIMARY KEY ("id");
 
 
 
@@ -576,6 +619,22 @@ ALTER TABLE ONLY "public"."vehicles"
 
 
 CREATE POLICY "Admin Full Access Orders" ON "public"."orders" TO "authenticated" USING ((EXISTS ( SELECT 1
+   FROM "public"."profiles"
+  WHERE (("profiles"."id" = "auth"."uid"()) AND ("profiles"."role" = 'admin'::"text"))))) WITH CHECK ((EXISTS ( SELECT 1
+   FROM "public"."profiles"
+  WHERE (("profiles"."id" = "auth"."uid"()) AND ("profiles"."role" = 'admin'::"text")))));
+
+
+
+CREATE POLICY "Admins can update delivery settings" ON "public"."delivery_settings" FOR UPDATE TO "authenticated" USING ((EXISTS ( SELECT 1
+   FROM "public"."profiles"
+  WHERE (("profiles"."id" = "auth"."uid"()) AND ("profiles"."role" = 'admin'::"text"))))) WITH CHECK ((EXISTS ( SELECT 1
+   FROM "public"."profiles"
+  WHERE (("profiles"."id" = "auth"."uid"()) AND ("profiles"."role" = 'admin'::"text")))));
+
+
+
+CREATE POLICY "Admins can update fuel prices" ON "public"."fuel_prices" FOR UPDATE TO "authenticated" USING ((EXISTS ( SELECT 1
    FROM "public"."profiles"
   WHERE (("profiles"."id" = "auth"."uid"()) AND ("profiles"."role" = 'admin'::"text"))))) WITH CHECK ((EXISTS ( SELECT 1
    FROM "public"."profiles"
@@ -1046,6 +1105,12 @@ GRANT ALL ON TABLE "public"."payments" TO "service_role";
 GRANT ALL ON TABLE "public"."profiles" TO "anon";
 GRANT ALL ON TABLE "public"."profiles" TO "authenticated";
 GRANT ALL ON TABLE "public"."profiles" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."promotion_banners" TO "anon";
+GRANT ALL ON TABLE "public"."promotion_banners" TO "authenticated";
+GRANT ALL ON TABLE "public"."promotion_banners" TO "service_role";
 
 
 
