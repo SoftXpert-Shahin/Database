@@ -358,16 +358,14 @@ CREATE TABLE IF NOT EXISTS "public"."promotion_banners" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "title" "text" NOT NULL,
     "subtitle" "text",
-    "image_url" "text" NOT NULL,
     "target_app" "text" DEFAULT 'both'::"text" NOT NULL,
-    "action_type" "text" DEFAULT 'none'::"text",
-    "action_value" "text",
     "sort_order" integer DEFAULT 0,
-    "active" boolean DEFAULT true,
+    "is_active" boolean DEFAULT true,
     "starts_at" timestamp with time zone,
     "ends_at" timestamp with time zone,
     "created_at" timestamp with time zone DEFAULT "now"(),
-    "updated_at" timestamp with time zone DEFAULT "now"()
+    "updated_at" timestamp with time zone DEFAULT "now"(),
+    "tag" "text"
 );
 
 
