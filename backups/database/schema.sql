@@ -127,6 +127,8 @@ CREATE TABLE IF NOT EXISTS "public"."app_content" (
     "app_version" "text" DEFAULT '1.0.0'::"text"
 );
 
+ALTER TABLE ONLY "public"."app_content" REPLICA IDENTITY FULL;
+
 
 ALTER TABLE "public"."app_content" OWNER TO "postgres";
 
@@ -160,6 +162,8 @@ CREATE TABLE IF NOT EXISTS "public"."delivery_settings" (
     "created_at" timestamp with time zone DEFAULT "now"(),
     "updated_at" timestamp with time zone DEFAULT "now"()
 );
+
+ALTER TABLE ONLY "public"."delivery_settings" REPLICA IDENTITY FULL;
 
 
 ALTER TABLE "public"."delivery_settings" OWNER TO "postgres";
@@ -231,10 +235,11 @@ CREATE TABLE IF NOT EXISTS "public"."fuel_prices" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "fuel_type" "text" NOT NULL,
     "price_per_liter" numeric NOT NULL,
-    "currency_symbol" "text" DEFAULT '৳'::"text",
     "active" boolean DEFAULT true,
     "created_at" timestamp with time zone DEFAULT "now"()
 );
+
+ALTER TABLE ONLY "public"."fuel_prices" REPLICA IDENTITY FULL;
 
 
 ALTER TABLE "public"."fuel_prices" OWNER TO "postgres";
@@ -652,7 +657,7 @@ CREATE POLICY "Allow public insert for signup" ON "public"."profiles" FOR INSERT
 
 
 
-CREATE POLICY "Anyone can read fuel prices" ON "public"."fuel_prices" FOR SELECT TO "authenticated" USING (true);
+CREATE POLICY "Anyone can read fuel prices" ON "public"."fuel_prices" FOR SELECT USING (true);
 
 
 
@@ -715,6 +720,10 @@ CREATE POLICY "Public can read app content" ON "public"."app_content" FOR SELECT
 
 
 CREATE POLICY "Public can read fuel prices" ON "public"."fuel_prices" FOR SELECT TO "anon" USING (true);
+
+
+
+CREATE POLICY "Public can view fuel prices" ON "public"."fuel_prices" FOR SELECT USING (true);
 
 
 
@@ -823,7 +832,19 @@ ALTER PUBLICATION "supabase_realtime" OWNER TO "postgres";
 
 
 
+ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "public"."app_content";
+
+
+
+ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "public"."delivery_settings";
+
+
+
 ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "public"."driver_locations";
+
+
+
+ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "public"."fuel_prices";
 
 
 
@@ -832,6 +853,10 @@ ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "public"."orders";
 
 
 ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "public"."profiles";
+
+
+
+ALTER PUBLICATION "supabase_realtime" ADD TABLE ONLY "public"."promotion_banners";
 
 
 
