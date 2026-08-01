@@ -217,20 +217,6 @@ CREATE TABLE IF NOT EXISTS "public"."drivers" (
 ALTER TABLE "public"."drivers" OWNER TO "postgres";
 
 
-CREATE TABLE IF NOT EXISTS "public"."fuel_orders" (
-    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
-    "customer_id" "uuid",
-    "fuel_type" "text" NOT NULL,
-    "quantity" integer NOT NULL,
-    "address" "text" NOT NULL,
-    "status" "text" DEFAULT 'pending'::"text",
-    "created_at" timestamp with time zone DEFAULT "now"()
-);
-
-
-ALTER TABLE "public"."fuel_orders" OWNER TO "postgres";
-
-
 CREATE TABLE IF NOT EXISTS "public"."fuel_prices" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "fuel_type" "text" NOT NULL,
@@ -446,11 +432,6 @@ ALTER TABLE ONLY "public"."drivers"
 
 
 
-ALTER TABLE ONLY "public"."fuel_orders"
-    ADD CONSTRAINT "fuel_orders_pkey" PRIMARY KEY ("id");
-
-
-
 ALTER TABLE ONLY "public"."fuel_prices"
     ADD CONSTRAINT "fuel_prices_fuel_type_key" UNIQUE ("fuel_type");
 
@@ -558,11 +539,6 @@ ALTER TABLE ONLY "public"."driver_verifications"
 
 ALTER TABLE ONLY "public"."drivers"
     ADD CONSTRAINT "drivers_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profiles"("id");
-
-
-
-ALTER TABLE ONLY "public"."fuel_orders"
-    ADD CONSTRAINT "fuel_orders_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "auth"."users"("id");
 
 
 
@@ -794,9 +770,6 @@ ALTER TABLE "public"."driver_verifications" ENABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."drivers" ENABLE ROW LEVEL SECURITY;
-
-
-ALTER TABLE "public"."fuel_orders" ENABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."fuel_prices" ENABLE ROW LEVEL SECURITY;
@@ -1080,12 +1053,6 @@ GRANT ALL ON TABLE "public"."driver_verifications" TO "service_role";
 GRANT ALL ON TABLE "public"."drivers" TO "anon";
 GRANT ALL ON TABLE "public"."drivers" TO "authenticated";
 GRANT ALL ON TABLE "public"."drivers" TO "service_role";
-
-
-
-GRANT ALL ON TABLE "public"."fuel_orders" TO "anon";
-GRANT ALL ON TABLE "public"."fuel_orders" TO "authenticated";
-GRANT ALL ON TABLE "public"."fuel_orders" TO "service_role";
 
 
 
