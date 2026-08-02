@@ -338,7 +338,9 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "division" "text",
     "city" "text",
     "area" "text",
-    "address" "text"
+    "address" "text",
+    "rating" numeric(3,2) DEFAULT 5.00 NOT NULL,
+    "total_reviews" integer DEFAULT 0 NOT NULL
 );
 
 
