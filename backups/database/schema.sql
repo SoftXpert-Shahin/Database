@@ -795,6 +795,9 @@ ALTER TABLE "public"."payments" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
 
 
+ALTER TABLE "public"."promotion_banners" ENABLE ROW LEVEL SECURITY;
+
+
 ALTER TABLE "public"."vehicles" ENABLE ROW LEVEL SECURITY;
 
 
