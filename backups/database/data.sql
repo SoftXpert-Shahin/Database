@@ -4,7 +4,7 @@ SET session_replication_role = replica;
 -- PostgreSQL database dump
 --
 
--- \restrict jBUAQ0OQVy05tm9ecFaQnGfILzFB56m372pihBSLcRj0Y49geE22VWLT7uaTgCA
+-- \restrict zOYh5n0eHZ26z98V9V4MzihRgIjgmaaamdJUegoN84FCuCQHxgL1AfQiGwGKWbL
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
@@ -1339,8 +1339,8 @@ COPY "public"."vehicles" ("id", "user_id", "make", "model", "year", "plate_numbe
 -- Data for Name: buckets; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
 --
 
-COPY "storage"."buckets" ("id", "name", "owner", "created_at", "updated_at", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id", "type") FROM stdin;
-avatars	avatars	\N	2026-07-16 08:14:43.245995+00	2026-07-16 08:14:43.245995+00	t	f	5242880	\N	\N	STANDARD
+COPY "storage"."buckets" ("id", "name", "owner", "created_at", "updated_at", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id", "type", "versioning_status") FROM stdin;
+avatars	avatars	\N	2026-07-16 08:14:43.245995+00	2026-07-16 08:14:43.245995+00	t	f	5242880	\N	\N	STANDARD	DISABLED
 \.
 
 
@@ -1364,12 +1364,12 @@ COPY "storage"."buckets_vectors" ("id", "type", "created_at", "updated_at") FROM
 -- Data for Name: objects; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
 --
 
-COPY "storage"."objects" ("id", "bucket_id", "name", "owner", "created_at", "updated_at", "last_accessed_at", "metadata", "version", "owner_id", "user_metadata") FROM stdin;
-a735ebd1-cb81-48fc-9848-309af66ea2bd	avatars	1a3dd5cc-a943-45cd-a925-69df114aa14f-1784568119451.jpg	1a3dd5cc-a943-45cd-a925-69df114aa14f	2026-07-20 17:22:00.289812+00	2026-07-20 17:22:00.289812+00	2026-07-20 17:22:00.289812+00	{"eTag": "\\"f5ed5bd494c91b7d3a082cc4399b2b86\\"", "size": 360841, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-20T17:22:01.000Z", "contentLength": 360841, "httpStatusCode": 200}	0d30c08d-8f7b-4190-9ec8-29bca1342586	1a3dd5cc-a943-45cd-a925-69df114aa14f	{}
-022e08c7-2801-4f1d-8cdd-d2ce3319939c	avatars	2bdad9f6-3bc3-4ca2-b485-80f6421659d2-1784635062380.jpg	2bdad9f6-3bc3-4ca2-b485-80f6421659d2	2026-07-21 11:57:43.37157+00	2026-07-21 11:57:43.37157+00	2026-07-21 11:57:43.37157+00	{"eTag": "\\"68bc2a6f81109c1535ec45678a81ce70\\"", "size": 80931, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-21T11:57:44.000Z", "contentLength": 80931, "httpStatusCode": 200}	f7461103-2875-43eb-83c7-f202419037d8	2bdad9f6-3bc3-4ca2-b485-80f6421659d2	{}
-e3e8a2b0-f49c-49ef-82a3-5d1d9a133b0e	avatars	a0e1b020-b22d-4317-bef9-94a69c1f2c15-1784651289626.jpg	a0e1b020-b22d-4317-bef9-94a69c1f2c15	2026-07-21 16:28:10.355343+00	2026-07-21 16:28:10.355343+00	2026-07-21 16:28:10.355343+00	{"eTag": "\\"a3a744638798bc104318aa9b256e7a55\\"", "size": 23959, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-21T16:28:11.000Z", "contentLength": 23959, "httpStatusCode": 200}	08e6efa8-72bf-42a1-b59e-d66a8e0f4a31	a0e1b020-b22d-4317-bef9-94a69c1f2c15	{}
-c09550fb-e88b-4880-996c-f22fbdf4b472	avatars	2bdad9f6-3bc3-4ca2-b485-80f6421659d2-1784660116345.jpg	2bdad9f6-3bc3-4ca2-b485-80f6421659d2	2026-07-21 18:55:17.390014+00	2026-07-21 18:55:17.390014+00	2026-07-21 18:55:17.390014+00	{"eTag": "\\"355feab8357ff813cb9a6febd3fbb0d0\\"", "size": 438161, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-21T18:55:18.000Z", "contentLength": 438161, "httpStatusCode": 200}	c09c75cd-36f5-45fb-91e8-5e4c88d6b5e1	2bdad9f6-3bc3-4ca2-b485-80f6421659d2	{}
-7c7ed638-f177-41c2-9ed2-2a24c89dfbbc	avatars	fed16cd3-2673-4355-ac94-a3289224ab6d-1785127873970.jpg	fed16cd3-2673-4355-ac94-a3289224ab6d	2026-07-27 04:51:14.856943+00	2026-07-27 04:51:14.856943+00	2026-07-27 04:51:14.856943+00	{"eTag": "\\"cb3c9c7af6572f01f439ebe78cc2c752\\"", "size": 11765, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-27T04:51:15.000Z", "contentLength": 11765, "httpStatusCode": 200}	f1f1101d-77dd-4686-add5-73e48ede8be1	fed16cd3-2673-4355-ac94-a3289224ab6d	{}
+COPY "storage"."objects" ("id", "bucket_id", "name", "owner", "created_at", "updated_at", "last_accessed_at", "metadata", "version", "owner_id", "user_metadata", "archived_at", "is_delete_marker", "is_versioned") FROM stdin;
+a735ebd1-cb81-48fc-9848-309af66ea2bd	avatars	1a3dd5cc-a943-45cd-a925-69df114aa14f-1784568119451.jpg	1a3dd5cc-a943-45cd-a925-69df114aa14f	2026-07-20 17:22:00.289812+00	2026-07-20 17:22:00.289812+00	2026-07-20 17:22:00.289812+00	{"eTag": "\\"f5ed5bd494c91b7d3a082cc4399b2b86\\"", "size": 360841, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-20T17:22:01.000Z", "contentLength": 360841, "httpStatusCode": 200}	0d30c08d-8f7b-4190-9ec8-29bca1342586	1a3dd5cc-a943-45cd-a925-69df114aa14f	{}	\N	f	f
+022e08c7-2801-4f1d-8cdd-d2ce3319939c	avatars	2bdad9f6-3bc3-4ca2-b485-80f6421659d2-1784635062380.jpg	2bdad9f6-3bc3-4ca2-b485-80f6421659d2	2026-07-21 11:57:43.37157+00	2026-07-21 11:57:43.37157+00	2026-07-21 11:57:43.37157+00	{"eTag": "\\"68bc2a6f81109c1535ec45678a81ce70\\"", "size": 80931, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-21T11:57:44.000Z", "contentLength": 80931, "httpStatusCode": 200}	f7461103-2875-43eb-83c7-f202419037d8	2bdad9f6-3bc3-4ca2-b485-80f6421659d2	{}	\N	f	f
+e3e8a2b0-f49c-49ef-82a3-5d1d9a133b0e	avatars	a0e1b020-b22d-4317-bef9-94a69c1f2c15-1784651289626.jpg	a0e1b020-b22d-4317-bef9-94a69c1f2c15	2026-07-21 16:28:10.355343+00	2026-07-21 16:28:10.355343+00	2026-07-21 16:28:10.355343+00	{"eTag": "\\"a3a744638798bc104318aa9b256e7a55\\"", "size": 23959, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-21T16:28:11.000Z", "contentLength": 23959, "httpStatusCode": 200}	08e6efa8-72bf-42a1-b59e-d66a8e0f4a31	a0e1b020-b22d-4317-bef9-94a69c1f2c15	{}	\N	f	f
+c09550fb-e88b-4880-996c-f22fbdf4b472	avatars	2bdad9f6-3bc3-4ca2-b485-80f6421659d2-1784660116345.jpg	2bdad9f6-3bc3-4ca2-b485-80f6421659d2	2026-07-21 18:55:17.390014+00	2026-07-21 18:55:17.390014+00	2026-07-21 18:55:17.390014+00	{"eTag": "\\"355feab8357ff813cb9a6febd3fbb0d0\\"", "size": 438161, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-21T18:55:18.000Z", "contentLength": 438161, "httpStatusCode": 200}	c09c75cd-36f5-45fb-91e8-5e4c88d6b5e1	2bdad9f6-3bc3-4ca2-b485-80f6421659d2	{}	\N	f	f
+7c7ed638-f177-41c2-9ed2-2a24c89dfbbc	avatars	fed16cd3-2673-4355-ac94-a3289224ab6d-1785127873970.jpg	fed16cd3-2673-4355-ac94-a3289224ab6d	2026-07-27 04:51:14.856943+00	2026-07-27 04:51:14.856943+00	2026-07-27 04:51:14.856943+00	{"eTag": "\\"cb3c9c7af6572f01f439ebe78cc2c752\\"", "size": 11765, "mimetype": "text/plain", "cacheControl": "max-age=3600", "lastModified": "2026-07-27T04:51:15.000Z", "contentLength": 11765, "httpStatusCode": 200}	f1f1101d-77dd-4686-add5-73e48ede8be1	fed16cd3-2673-4355-ac94-a3289224ab6d	{}	\N	f	f
 \.
 
 
@@ -1408,6 +1408,6 @@ SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 862, true);
 -- PostgreSQL database dump complete
 --
 
--- \unrestrict jBUAQ0OQVy05tm9ecFaQnGfILzFB56m372pihBSLcRj0Y49geE22VWLT7uaTgCA
+-- \unrestrict zOYh5n0eHZ26z98V9V4MzihRgIjgmaaamdJUegoN84FCuCQHxgL1AfQiGwGKWbL
 
 RESET ALL;
