@@ -4,7 +4,7 @@ SET session_replication_role = replica;
 -- PostgreSQL database dump
 --
 
--- \restrict LBQZmBVHS91BbarzjBoUHRNkoGco5kuRGrcg1lbdPnjDjcaRGdcGLQDSpRTZ6rE
+-- \restrict r6FtbRdPqXya1aIBcRC5ZCuHZsmbRpaxXxoaLpb1DjtWdSbPlxBhMyCwqN4qH6e
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
@@ -1371,8 +1371,8 @@ COPY "public"."vehicles" ("id", "user_id", "make", "model", "year", "plate_numbe
 -- Data for Name: buckets; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
 --
 
-COPY "storage"."buckets" ("id", "name", "owner", "created_at", "updated_at", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id", "type", "versioning_status") FROM stdin;
-avatars	avatars	\N	2026-07-16 08:14:43.245995+00	2026-07-16 08:14:43.245995+00	t	f	5242880	\N	\N	STANDARD	DISABLED
+COPY "storage"."buckets" ("id", "name", "owner", "created_at", "updated_at", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id", "type", "versioning_status", "lifecycle_configuration", "lifecycle_configuration_generation") FROM stdin;
+avatars	avatars	\N	2026-07-16 08:14:43.245995+00	2026-07-16 08:14:43.245995+00	t	f	5242880	\N	\N	STANDARD	DISABLED	\N	\N
 \.
 
 
@@ -1440,6 +1440,6 @@ SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 862, true);
 -- PostgreSQL database dump complete
 --
 
--- \unrestrict LBQZmBVHS91BbarzjBoUHRNkoGco5kuRGrcg1lbdPnjDjcaRGdcGLQDSpRTZ6rE
+-- \unrestrict r6FtbRdPqXya1aIBcRC5ZCuHZsmbRpaxXxoaLpb1DjtWdSbPlxBhMyCwqN4qH6e
 
 RESET ALL;
